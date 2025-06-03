@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: taskapp
+  datasource:
+    url: jdbc:postgresql://localhost:5432/task
+    username: postgres
+    password: 1234
+  jpa:
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          dialect: org.hibernate.dialect.PostgreSQLDialect
+      show-sql: true
+  aop:
+    proxy-target-class: true # Required for @RateLimiter to work
+
+resilience4j:
+  ratelimiter:
+    instances:
+      # Task Service Rate Limiter (10 requests per second)
+      taskRateLimiter:
+        limitForPeriod: 10
+        limitRefreshPeriod: 1s
+        timeoutDuration: 100ms
+
+      # Board Service Rate Limiter (5 requests per second)
+      boardRateLimiter:
+        limitForPeriod: 5
+        limitRefreshPeriod: 1s
+        timeoutDuration: 100ms
+
+      # Column Service Rate Limiter (8 requests per second)
+      columnRateLimiter:
+        limitForPeriod: 8
+        limitRefreshPeriod: 1s
+        timeoutDuration: 100ms
+
+      # Subtask Service Rate Limiter (15 requests per second)
+      subtaskRateLimiter:
+        limitForPeriod: 15
+        limitRefreshPeriod: 1s
+        timeoutDuration: 100ms
