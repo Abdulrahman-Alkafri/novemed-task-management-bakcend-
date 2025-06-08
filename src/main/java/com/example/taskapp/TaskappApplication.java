@@ -11,5 +11,4 @@ public class TaskappApplication {
     public static void main(String[] args) {
         SpringApplication.run(TaskappApplication.class, args);
     }
-
 }
